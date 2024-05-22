@@ -1,3 +1,26 @@
+<script setup lang="ts">
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+
+const { onOpen: registerModal } = useRegister()
+const { onOpen: loginModal } = useLogin()
+
+const user = useUser()
+
+async function logout() {
+    await $fetch('/api/logout', {
+        method: 'POST',
+    })
+    user.value = null
+    loginModal()
+}
+</script>
+
 <template>
     <div class="relative">
         <div class="flex flex-row items-center gap-3">
@@ -52,10 +75,10 @@
                         </DropdownMenuItem>
                     </template>
                     <template v-else>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem @click="registerModal">
                             <span>Register</span>
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem @click="loginModal">
                             <span>Login</span>
                         </DropdownMenuItem>
                     </template>
@@ -64,25 +87,3 @@
         </div>
     </div>
 </template>
-
-<script setup lang="ts">
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-
-const user = useUser()
-
-async function logout() {
-    await $fetch('/api/logout', {
-        method: 'POST',
-    })
-    user.value = null
-    await navigateTo('/login')
-}
-</script>
-
-<style scoped></style>
