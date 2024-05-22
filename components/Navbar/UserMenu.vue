@@ -7,7 +7,8 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-const { onOpen } = useRegister()
+const { onOpen: registerModal } = useRegister()
+const { onOpen: loginModal } = useLogin()
 
 const user = useUser()
 
@@ -74,10 +75,10 @@ async function logout() {
                         </DropdownMenuItem>
                     </template>
                     <template v-else>
-                        <DropdownMenuItem @click="onOpen">
+                        <DropdownMenuItem @click="registerModal">
                             <span>Register</span>
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem @click="loginModal">
                             <span>Login</span>
                         </DropdownMenuItem>
                     </template>

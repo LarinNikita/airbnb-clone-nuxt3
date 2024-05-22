@@ -12,15 +12,14 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
-const { isOpen, onClose, RegisterSchema } = useRegister()
-const { onOpen } = useLogin()
+const { isOpen, onClose, LoginSchema } = useLogin()
+const { onOpen } = useRegister()
 
-const formSchema = toTypedSchema(RegisterSchema)
+const formSchema = toTypedSchema(LoginSchema)
 const form = useForm({
     validationSchema: formSchema,
     initialValues: {
         email: '',
-        name: '',
         password: '',
     },
 })
@@ -30,16 +29,16 @@ const onSubmit = form.handleSubmit(values => {
 })
 
 const toggleForm = () => {
-    onClose() // Register modal
-    onOpen() // Login model
+    onClose() // Login model
+    onOpen() // Register modal
 }
 </script>
 
 <template>
     <AppModal
         :isOpen="isOpen"
-        title="Welcome to Airbnb"
-        description="Create an account"
+        title="Welcome back"
+        description="Login to your account"
         @onClose="onClose"
         v-if="isOpen"
     >
@@ -51,19 +50,6 @@ const toggleForm = () => {
                         <Input
                             type="email"
                             placeholder="Email"
-                            v-bind="componentField"
-                        />
-                    </FormControl>
-                    <FormMessage />
-                </FormItem>
-            </FormField>
-            <FormField v-slot="{ componentField }" name="name">
-                <FormItem>
-                    <FormLabel>Name</FormLabel>
-                    <FormControl>
-                        <Input
-                            type="text"
-                            placeholder="Name"
                             v-bind="componentField"
                         />
                     </FormControl>
@@ -99,12 +85,12 @@ const toggleForm = () => {
                     </Button>
                     <div class="mt-4 text-center font-light">
                         <p>
-                            Already have an account?
+                            Don't have an account?
                             <span
                                 class="cursor-pointer font-normal text-primary hover:underline"
                                 @click="toggleForm"
                             >
-                                Log in
+                                Register
                             </span>
                         </p>
                     </div>

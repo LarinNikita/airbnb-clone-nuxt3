@@ -5,6 +5,7 @@
             <slot />
         </div>
         <AuthRegister />
+        <AuthLogin />
     </div>
 </template>
 
