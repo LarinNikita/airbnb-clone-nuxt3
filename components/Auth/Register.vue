@@ -48,6 +48,8 @@ const onSubmit = form.handleSubmit(async values => {
             })
         }
 
+        toast({ title: 'Account created!' })
+
         return onClose()
     } catch (error) {
         toast({

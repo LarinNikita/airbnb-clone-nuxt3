@@ -17,7 +17,7 @@ async function logout() {
         method: 'POST',
     })
     user.value = null
-    await navigateTo('/login')
+    loginModal()
 }
 </script>
 

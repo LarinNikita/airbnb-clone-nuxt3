@@ -11,9 +11,12 @@ import {
     FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { useToast } from '@/components/ui/toast/use-toast'
 
+const { toast } = useToast()
 const { isOpen, onClose, LoginSchema } = useLogin()
 const { onOpen } = useRegister()
+const isLoading = ref(false)
 
 const formSchema = toTypedSchema(LoginSchema)
 const form = useForm({
@@ -24,8 +27,41 @@ const form = useForm({
     },
 })
 
-const onSubmit = form.handleSubmit(values => {
-    console.log('Form submitted!', values)
+const onSubmit = form.handleSubmit(async values => {
+    try {
+        isLoading.value = true
+
+        const { data, error } = await useAsyncData(() =>
+            $fetch('/api/auth/signin', {
+                method: 'POST',
+                body: values,
+            }),
+        )
+
+        if (error.value) {
+            return toast({
+                title: error.value.statusCode.toString(),
+                description: error.value.statusMessage,
+                variant: 'destructive',
+            })
+        }
+
+        const user = useUser()
+        const res = await useRequestFetch()('/api/user')
+
+        if (res) {
+            user.value = res
+        }
+
+        return onClose()
+    } catch (error) {
+        toast({
+            title: error as script,
+            variant: 'destructive',
+        })
+    } finally {
+        isLoading.value = false
+    }
 })
 
 const toggleForm = () => {
@@ -42,6 +78,7 @@ const toggleForm = () => {
         @onClose="onClose"
         v-if="isOpen"
     >
+        <AppLoader class="my-5" v-if="isLoading" />
         <form @submit="onSubmit" class="space-y-4">
             <FormField v-slot="{ componentField }" name="email">
                 <FormItem>
@@ -71,7 +108,7 @@ const toggleForm = () => {
             </FormField>
             <div class="flex flex-col gap-2 py-6">
                 <div class="flex w-full flex-row items-center gap-4">
-                    <Button type="submit" :disabled="false" class="w-full">
+                    <Button type="submit" :disabled="isLoading" class="w-full">
                         Submit
                     </Button>
                 </div>
