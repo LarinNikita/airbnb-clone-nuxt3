@@ -8,7 +8,6 @@ export default defineNuxtConfig({
     },
 
     modules: ['@nuxtjs/tailwindcss', 'shadcn-nuxt', 'nuxt-icon'],
-    //@ts-ignore
     shadcn: {
         prefix: '',
         componentDir: './components/ui',
