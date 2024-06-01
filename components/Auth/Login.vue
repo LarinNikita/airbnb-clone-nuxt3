@@ -56,7 +56,7 @@ const onSubmit = form.handleSubmit(async values => {
         return onClose()
     } catch (error) {
         toast({
-            title: error as script,
+            title: error as string,
             variant: 'destructive',
         })
     } finally {

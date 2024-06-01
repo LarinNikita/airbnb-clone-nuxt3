@@ -1,10 +1,3 @@
-import * as z from 'zod'
-
-const LoginSchema = z.object({
-    email: z.string().email({ message: 'Email is required' }),
-    password: z.string().min(6, { message: 'Minimum 6 characters required' }),
-})
-
 const state = reactive({
     isOpen: false,
 })
@@ -24,6 +17,5 @@ export default () => {
         isOpen,
         onOpen,
         onClose,
-        LoginSchema,
     }
 }
