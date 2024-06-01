@@ -9,6 +9,7 @@
                 </div>
             </AppContainer>
         </div>
+        <NavbarCategories />
     </div>
 </template>
 
