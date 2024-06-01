@@ -7,7 +7,12 @@ export default defineNuxtConfig({
         githubClientSecret: process.env.GITHUB_CLIENT_SECRET,
     },
 
-    modules: ['@nuxtjs/tailwindcss', 'shadcn-nuxt', 'nuxt-icon'],
+    modules: [
+        '@nuxtjs/tailwindcss',
+        'shadcn-nuxt',
+        'nuxt-icon',
+        'nuxt3-leaflet',
+    ],
     shadcn: {
         prefix: '',
         componentDir: './components/ui',

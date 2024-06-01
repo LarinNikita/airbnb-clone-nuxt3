@@ -9,6 +9,7 @@ import {
 
 const { onOpen: registerModal } = useRegister()
 const { onOpen: loginModal } = useLogin()
+const { onOpen: rentModal } = useRentModal()
 
 const user = useUser()
 
@@ -26,6 +27,7 @@ async function logout() {
         <div class="flex flex-row items-center gap-3">
             <div
                 class="hidden cursor-pointer rounded-full px-4 py-3 text-sm font-semibold transition hover:bg-neutral-100 md:block"
+                @click="rentModal"
             >
                 Airbnb your home
             </div>
@@ -67,7 +69,9 @@ async function logout() {
                         <DropdownMenuItem @click="navigateTo('/properties')">
                             <span>My properties</span>
                         </DropdownMenuItem>
-                        <DropdownMenuItem> Airbnb your home </DropdownMenuItem>
+                        <DropdownMenuItem @click="rentModal">
+                            Airbnb your home
+                        </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem @click="logout">
                             <Icon name="lucide:log-out" class="mr-2 size-4" />
