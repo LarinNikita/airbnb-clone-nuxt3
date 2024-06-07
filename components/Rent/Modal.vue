@@ -62,6 +62,44 @@
                 <RentMap :center="location?.latlng" />
             </ClientOnly>
         </div>
+        <div class="flex flex-col gap-8" v-if="step === STEPS.INFO">
+            <AppHeading
+                title="Share some basics about your place"
+                subtitle="What amenities do you have?"
+            />
+            <RentCounter
+                title="Guests"
+                subtitle="How many guests do you allow?"
+                :value="guestCount"
+                @change="
+                    (val: number) => {
+                        guestCount = val
+                    }
+                "
+            />
+            <hr />
+            <RentCounter
+                title="Rooms"
+                subtitle="How many rooms do you have?"
+                :value="roomCount"
+                @change="
+                    (val: number) => {
+                        roomCount = val
+                    }
+                "
+            />
+            <hr />
+            <RentCounter
+                title="Bathrooms"
+                subtitle="How many bathrooms do you have?"
+                :value="bathroomCount"
+                @change="
+                    (val: number) => {
+                        bathroomCount = val
+                    }
+                "
+            />
+        </div>
         <div class="flex flex-col gap-2 py-5">
             <div class="flex w-full items-center gap-4">
                 <Button
@@ -96,6 +134,7 @@ import { categories } from '~/constants'
 import { useToast } from '@/components/ui/toast/use-toast'
 
 import 'vue-select/dist/vue-select.css'
+import type { number } from 'zod'
 
 const { toast } = useToast()
 const { isOpen, onClose, countries, getByValue } = useRentModal()
@@ -133,6 +172,10 @@ const onNext = () => {
 
 const category = ref('')
 const location = ref<null | Country>(null)
+
+const guestCount = ref(1)
+const roomCount = ref(1)
+const bathroomCount = ref(1)
 
 const onSubmit = async () => {
     try {
