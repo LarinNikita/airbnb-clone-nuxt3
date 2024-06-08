@@ -33,6 +33,7 @@ export const useFavorite = async ({ listingId }: FavoriteProps) => {
             })
 
             if (!error.value) {
+                refresh()
                 return await refreshNuxtData('listings')
             }
 

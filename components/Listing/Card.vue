@@ -1,6 +1,7 @@
 <template>
     <!-- @vue-ignore -->
     <Card
+        @click="navigateTo(`/listings/${data.id}`)"
         class="group col-span-1 cursor-pointer rounded-xl border-0 shadow-none"
     >
         <CardContent class="grid gap-4 p-0">
