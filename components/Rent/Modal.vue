@@ -100,6 +100,28 @@
                 "
             />
         </div>
+        <div class="flex flex-col gap-8" v-if="step === STEPS.IMAGES">
+            <AppHeading
+                title="Add a photo of your place"
+                subtitle="Show guests what your place looks like!"
+            />
+            <div
+                @click="openWidget"
+                class="relative flex cursor-pointer flex-col items-center justify-center gap-4 border-2 border-dashed border-neutral-300 p-20 text-neutral-600 transition hover:opacity-70"
+            >
+                <Icon v-if="!imageUrl" size="50" name="tabler:photo-plus" />
+                <div v-if="!imageUrl" class="text-lg font-semibold">
+                    Click to upload
+                </div>
+                <div v-else class="absolute inset-0 size-full">
+                    <img
+                        :src="imageUrl"
+                        alt="House"
+                        class="size-full object-cover"
+                    />
+                </div>
+            </div>
+        </div>
         <div class="flex flex-col gap-2 py-5">
             <div class="flex w-full items-center gap-4">
                 <Button
@@ -134,9 +156,9 @@ import { categories } from '~/constants'
 import { useToast } from '@/components/ui/toast/use-toast'
 
 import 'vue-select/dist/vue-select.css'
-import type { number } from 'zod'
 
 const { toast } = useToast()
+const { imageUrl, openWidget } = useCloudinary()
 const { isOpen, onClose, countries, getByValue } = useRentModal()
 const isLoading = ref(false)
 
