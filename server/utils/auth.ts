@@ -2,6 +2,7 @@ import { Lucia } from 'lucia'
 import { PrismaAdapter } from '@lucia-auth/adapter-prisma'
 import { PrismaClient } from '@prisma/client'
 import { GitHub } from 'arctic'
+import type { H3Event } from 'h3'
 
 export const db = new PrismaClient()
 
@@ -40,3 +41,12 @@ export const github = new GitHub(
     process.env.GITHUB_CLIENT_ID!,
     process.env.GITHUB_CLIENT_SECRET!,
 )
+
+export const validateRequest = async (event: H3Event) => {
+    if (!event.context.user) {
+        throw createError({
+            statusMessage: 'Unauthorized',
+            status: 401,
+        })
+    }
+}

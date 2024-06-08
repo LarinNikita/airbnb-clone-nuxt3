@@ -135,6 +135,7 @@
                             type="text"
                             placeholder="Type here..."
                             v-bind="componentField"
+                            v-model="title"
                         />
                     </FormControl>
                 </FormItem>
@@ -148,6 +149,7 @@
                             type="text"
                             placeholder="Type here..."
                             v-bind="componentField"
+                            v-model="description"
                         />
                     </FormControl>
                 </FormItem>
@@ -166,6 +168,7 @@
                             type="number"
                             placeholder="Type here..."
                             v-bind="componentField"
+                            v-model="price"
                         />
                     </FormControl>
                 </FormItem>
@@ -185,7 +188,7 @@
                 </Button>
                 <Button
                     :disabled="isLoading"
-                    @click="onNext"
+                    @click="onSubmit"
                     type="button"
                     class="flex-1"
                 >
@@ -253,8 +256,40 @@ const description = ref('')
 const price = ref(10)
 
 const onSubmit = async () => {
+    if (step.value !== STEPS.PRICE) {
+        return onNext()
+    }
     try {
         isLoading.value = true
+
+        const { error } = await useAsyncData(() =>
+            //@ts-ignore
+            $fetch('/api/listings', {
+                method: 'POST',
+                body: {
+                    title: title.value,
+                    description: description.value,
+                    imageSrc: imageUrl.value,
+                    category: category.value,
+                    roomCount: roomCount.value,
+                    bathroomCount: bathroomCount.value,
+                    guestCount: guestCount.value,
+                    location: location.value,
+                    price: price.value,
+                },
+            }),
+        )
+
+        if (!error.value) {
+            toast({
+                title: 'Listing created successfully',
+            })
+        }
+
+        refreshNuxtData('listings')
+        step.value = 0
+        onClose()
+        return
     } catch (error) {
         toast({
             title: error as string,

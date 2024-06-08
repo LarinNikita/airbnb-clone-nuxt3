@@ -1,29 +1,30 @@
+<template>
+    <AppEmptyState v-if="data?.length === 0" show-reset />
+    <AppContainer>
+        <div
+            class="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+        >
+            <template v-if="!pending">
+                <ListingCard
+                    v-for="listing in data"
+                    :key="listing.id"
+                    :data="listing"
+                />
+            </template>
+            <template v-else>
+                <ListingLoader v-for="n in 8" :key="n" />
+            </template>
+        </div>
+    </AppContainer>
+</template>
+
 <script setup lang="ts">
-import { Button } from '@/components/ui/button'
-
-const user = useUser()
-
-async function logout() {
-    await $fetch('/api/logout', {
-        method: 'POST',
-    })
-    await navigateTo('/login')
-}
+const { data, error, pending } = await useFetch('/api/listings', {
+    method: 'get',
+    key: 'listings',
+})
 
 definePageMeta({
     middleware: 'protected',
 })
 </script>
-
-<template>
-    <div>
-        <pre
-            >{{ user }}
-        </pre>
-        <form @submit.prevent="logout">
-            <Button>Sign out</Button>
-        </form>
-    </div>
-</template>
-
-<style scoped></style>

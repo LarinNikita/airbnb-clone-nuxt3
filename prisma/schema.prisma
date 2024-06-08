@@ -14,15 +14,17 @@ datasource db {
 }
 
 model User {
-  id        String    @id
+  id String @id
 
-  github_id Int?      @unique
-  email     String    @unique
+  github_id Int?    @unique
+  email     String  @unique
   name      String
   password  String?
   image     String?
 
-  sessions Session[]
+  sessions     Session[]
+  listings     Listing[]
+  reservations Reservation[]
 }
 
 model Session {
@@ -30,4 +32,33 @@ model Session {
   userId    String
   expiresAt DateTime
   user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+}
+
+model Listing {
+  id            String        @id @default(uuid())
+  title         String
+  description   String
+  imageSrc      String
+  createdAt     DateTime      @default(now())
+  category      String
+  roomCount     Int
+  bathroomCount Int
+  guestCount    Int
+  locationValue String
+  userId        String
+  price         Int
+  user          User          @relation(references: [id], fields: [userId], onDelete: Cascade)
+  reservations  Reservation[]
+}
+
+model Reservation {
+  id         String   @id @default(uuid())
+  userId     String
+  listingId  String
+  startDate  DateTime
+  endDate    DateTime
+  totalPrice Int
+  createdAt  DateTime @default(now())
+  user       User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+  listing    Listing  @relation(references: [id], fields: [listingId], onDelete: Cascade)
 }
