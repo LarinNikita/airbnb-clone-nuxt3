@@ -122,6 +122,55 @@
                 </div>
             </div>
         </div>
+        <div class="flex flex-col gap-8" v-if="step === STEPS.DESCRIPTION">
+            <AppHeading
+                title="How would you describe your place?"
+                subtitle="Short and sweet best!"
+            />
+            <FormField v-slot="{ componentField }" name="title">
+                <FormItem>
+                    <FormLabel>Title</FormLabel>
+                    <FormControl>
+                        <Input
+                            type="text"
+                            placeholder="Type here..."
+                            v-bind="componentField"
+                        />
+                    </FormControl>
+                </FormItem>
+            </FormField>
+            <hr />
+            <FormField v-slot="{ componentField }" name="description">
+                <FormItem>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                        <Input
+                            type="text"
+                            placeholder="Type here..."
+                            v-bind="componentField"
+                        />
+                    </FormControl>
+                </FormItem>
+            </FormField>
+        </div>
+        <div class="flex flex-col gap-8" v-if="step === STEPS.PRICE">
+            <AppHeading
+                title="Now, set your price"
+                subtitle="How much do you charge night?"
+            />
+            <FormField v-slot="{ componentField }" name="price">
+                <FormItem>
+                    <FormLabel>Price</FormLabel>
+                    <FormControl>
+                        <Input
+                            type="number"
+                            placeholder="Type here..."
+                            v-bind="componentField"
+                        />
+                    </FormControl>
+                </FormItem>
+            </FormField>
+        </div>
         <div class="flex flex-col gap-2 py-5">
             <div class="flex w-full items-center gap-4">
                 <Button
@@ -198,6 +247,10 @@ const location = ref<null | Country>(null)
 const guestCount = ref(1)
 const roomCount = ref(1)
 const bathroomCount = ref(1)
+
+const title = ref('')
+const description = ref('')
+const price = ref(10)
 
 const onSubmit = async () => {
     try {
