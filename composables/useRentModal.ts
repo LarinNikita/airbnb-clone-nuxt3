@@ -1,9 +1,18 @@
+import countries from 'world-countries'
+
 const state = reactive({
     isOpen: false,
+    formattedCountries: countries.map(country => ({
+        value: country.cca2,
+        label: country.name.common,
+        flag: country.flag,
+        latlng: country.latlng,
+        region: country.region,
+    })),
 })
 
 export default () => {
-    const { isOpen } = toRefs(state)
+    const { isOpen, formattedCountries } = toRefs(state)
 
     const onOpen = () => {
         state.isOpen = true
@@ -13,9 +22,15 @@ export default () => {
         state.isOpen = false
     }
 
+    const getByValue = (value: string) => {
+        return formattedCountries.value.find(item => item.value === value)
+    }
+
     return {
         isOpen,
         onOpen,
         onClose,
+        countries: formattedCountries,
+        getByValue,
     }
 }
