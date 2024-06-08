@@ -16,11 +16,12 @@ datasource db {
 model User {
   id String @id
 
-  github_id Int?    @unique
-  email     String  @unique
-  name      String
-  password  String?
-  image     String?
+  github_id   Int?     @unique
+  name        String
+  email       String   @unique
+  password    String?
+  image       String?
+  favoriteIds String[]
 
   sessions     Session[]
   listings     Listing[]
