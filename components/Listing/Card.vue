@@ -1,4 +1,5 @@
 <template>
+    <!-- @vue-ignore -->
     <Card
         class="group col-span-1 cursor-pointer rounded-xl border-0 shadow-none"
     >
@@ -12,7 +13,7 @@
                     class="size-full object-cover transition group-hover:scale-110"
                 />
                 <div class="absolute right-3 top-3">
-                    <AppHeart />
+                    <AppHeart :listing-id="data.id" />
                 </div>
             </dir>
             <div class="text-lg font-semibold">

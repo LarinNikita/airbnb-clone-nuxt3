@@ -20,6 +20,7 @@ export const lucia = new Lucia(adapter, {
             githubId: attributes.github_id,
             name: attributes.name,
             image: attributes.image,
+            email: attributes.email,
         }
     },
 })
@@ -35,6 +36,7 @@ interface DatabaseUserAttributes {
     github_id: number
     name: string
     image: string
+    email: string
 }
 
 export const github = new GitHub(
