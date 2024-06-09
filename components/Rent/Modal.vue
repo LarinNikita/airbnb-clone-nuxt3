@@ -286,7 +286,7 @@ const onSubmit = async () => {
             })
         }
 
-        refreshNuxtData('listings')
+        refreshNuxtData(['listings', 'userProperties'])
         step.value = 0
         onClose()
         return
