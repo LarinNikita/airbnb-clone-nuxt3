@@ -1,8 +1,8 @@
 <template>
     <AppEmptyState
         v-if="data?.length === 0"
-        title="No trips found"
-        subtitle="Looks like you haven't reserved any trips."
+        title="No reservations found"
+        subtitle="Looks like you have no reservations on your properties."
     />
     <AppContainer v-else>
         <div
@@ -14,7 +14,7 @@
                     :key="reservation.id"
                     :data="reservation.listing"
                     :reservation="reservation"
-                    actionLabel="Cancel Trip"
+                    actionLabel="Cancel Reservation"
                     @on-action="cancelReservation"
                     :action-id="reservation.id"
                     :disabled="deletingId === reservation.id || isLoading"
@@ -37,7 +37,7 @@ const { data, error, pending } = await useFetch(
     `/api/reservations?userId=${user.value?.id}`,
     {
         method: 'get',
-        key: 'userTrips',
+        key: 'guestReservation',
     },
 )
 
@@ -60,10 +60,10 @@ const cancelReservation = async (id: string) => {
 
         if (!deleteError.value) {
             toast({
-                title: 'Trip is cancelled',
+                title: 'Reservation is cancelled',
             })
 
-            refreshNuxtData('userTrips')
+            refreshNuxtData('guestReservation')
         }
     } catch (error) {
         console.log(error)
