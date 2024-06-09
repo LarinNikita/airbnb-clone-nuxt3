@@ -39,10 +39,10 @@ async function logout() {
                         size="sm"
                     >
                         <Icon name="ant-design:menu-outline" />
-                        <Icon name="radix-icons:avatar" class="size-6" />
-                        <!-- <div class="hidden md:block">
+                        <!-- <Icon name="radix-icons:avatar" class="size-6" /> -->
+                        <div class="hidden md:block">
                             <img
-                                class="size-6 rounded-full"
+                                class="w-6 rounded-full"
                                 v-if="user && user.image"
                                 :alt="user.name"
                                 :src="user.image"
@@ -52,7 +52,7 @@ async function logout() {
                                 name="radix-icons:avatar"
                                 class="size-6"
                             />
-                        </div> -->
+                        </div>
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent class="w-56" align="end">
