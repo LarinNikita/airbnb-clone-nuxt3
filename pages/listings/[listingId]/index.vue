@@ -71,7 +71,6 @@ const initialDateRange = reactive<Range>({
 const isLoading = ref(false)
 const totalPrice = ref(data.value?.price)
 const dateRange = ref<Range>(initialDateRange)
-// const reservations = ref<Date[]>([])
 const disabledDates = computed(() => {
     let dates: Date[] = []
 
@@ -104,10 +103,12 @@ const createReservation = async () => {
         )
 
         if (!error.value) {
-            return toast({
+            toast({
                 title: 'Successfully Reservation Created',
                 duration: 2000,
             })
+
+            return navigateTo('/trips')
         }
 
         return toast({
