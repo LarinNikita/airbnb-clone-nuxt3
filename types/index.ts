@@ -11,3 +11,8 @@ export type Country = {
 export type SafeListings = Omit<Listing, 'createdAt'> & {
     createdAt: string
 }
+
+export interface Range {
+    start: Date
+    end: Date
+}
