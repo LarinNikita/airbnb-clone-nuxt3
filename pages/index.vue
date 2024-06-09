@@ -19,10 +19,30 @@
 </template>
 
 <script setup lang="ts">
-const { data, error, pending } = await useFetch('/api/listings', {
-    method: 'get',
-    key: 'listings',
-})
+import type { SafeListings } from '~/types'
+
+const route = useRoute()
+//@ts-ignore
+const query = computed(() => new URLSearchParams(route.query).toString())
+// const { data, error, pending, refresh } = await useFetch<SafeListings[]>(
+//     `/api/listings?${query.value}`,
+//     {
+//         method: 'get',
+//         key: 'listings',
+//     },
+// )
+
+const { data, pending } = await useAsyncData<SafeListings[]>('listings', () =>
+    //@ts-ignore
+    $fetch(`/api/listings?${query.value}`),
+)
+
+watch(
+    () => route.query,
+    async () => {
+        await refreshNuxtData('listings')
+    },
+)
 
 definePageMeta({
     middleware: 'protected',

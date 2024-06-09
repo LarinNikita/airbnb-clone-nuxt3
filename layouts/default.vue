@@ -7,6 +7,7 @@
         <AuthRegister />
         <AuthLogin />
         <RentModal />
+        <ListingSearch />
     </div>
 </template>
 

@@ -4,7 +4,7 @@
             <AppContainer>
                 <div class="flex items-center justify-between gap-3 md:gap-0">
                     <NavbarLogo />
-                    <NavbarSearch />
+                    <NavbarSearch @click="onOpen" />
                     <NavbarUserMenu />
                 </div>
             </AppContainer>
@@ -13,6 +13,6 @@
     </div>
 </template>
 
-<script setup lang="ts"></script>
-
-<style scoped></style>
+<script setup lang="ts">
+const { onOpen } = useSearchModal()
+</script>
